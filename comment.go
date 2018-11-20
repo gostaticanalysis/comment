@@ -19,7 +19,7 @@ func New(fset *token.FileSet, files []*ast.File) Maps {
 }
 
 // Comments returns correspond a CommentGroup slice to specified AST node.
-func (maps Maps) Comments(n ast.Node) []*CommentGroup {
+func (maps Maps) Comments(n ast.Node) []*ast.CommentGroup {
 	for i := range maps {
 		if maps[i][n] != nil {
 			return maps[i][n]
