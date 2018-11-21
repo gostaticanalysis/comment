@@ -1,4 +1,4 @@
-package comment
+package commentmap
 
 import (
 	"reflect"
@@ -8,11 +8,11 @@ import (
 )
 
 var Analyzer = &analysis.Analyzer{
-	Name:             "comment",
+	Name:             "commentmap",
 	Doc:              "create comment map",
 	Run:              run,
 	RunDespiteErrors: true,
-	ResultType:       reflect.TypeOf(new(comment.Maps)),
+	ResultType:       reflect.TypeOf(comment.Maps{}),
 }
 
 func run(pass *analysis.Pass) (interface{}, error) {
