@@ -37,3 +37,13 @@ func (maps Maps) Annotated(n ast.Node, annotation string) bool {
 	}
 	return false
 }
+
+// Skipped checks either specified AST node is skipped by analyzers.
+// For example:
+//
+//   // @skip readonly
+//   pkgvar = "assign"
+//
+func (maps Maps) Skipped(n ast.Node, name string) bool {
+	return maps.Annotated(n, "@skip "+name)
+}
