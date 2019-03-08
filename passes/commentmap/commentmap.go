@@ -3,7 +3,7 @@ package commentmap
 import (
 	"reflect"
 
-	"github.com/tenntenn/comment"
+	"github.com/gostaticanalysis/comment"
 	"golang.org/x/tools/go/analysis"
 )
 
