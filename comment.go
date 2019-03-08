@@ -43,11 +43,11 @@ func (maps Maps) Annotated(n ast.Node, annotation string) bool {
 //   //lint:ignore Check1[,Check2,...,CheckN] reason
 func (maps Maps) Ignore(n ast.Node, check string) bool {
 	for _, cg := range maps.Comments(n) {
-		txt := strings.TrimSpace(cg.Text())
-		if strings.HasPrefix(txt, "lint:ignore") {
+		txt := strings.Split(cg.Text(), " ")
+		if len(txt) < 3 && txt[0] != "lint:ignore" {
 			continue
 		}
-		checks := strings.Split(txt, ",")
+		checks := strings.Split(txt[1], ",")
 		for i := range checks {
 			if check == checks[i] {
 				return true
