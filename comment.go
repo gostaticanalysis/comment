@@ -38,12 +38,21 @@ func (maps Maps) Annotated(n ast.Node, annotation string) bool {
 	return false
 }
 
-// Skipped checks either specified AST node is skipped by analyzers.
-// For example:
-//
-//   // @skip readonly
-//   pkgvar = "assign"
-//
-func (maps Maps) Skipped(n ast.Node, name string) bool {
-	return maps.Annotated(n, "@skip "+name)
+// Ignore checks either specified AST node is ignored by the check.
+// It follows staticcheck style as the below.
+//   //lint:ignore Check1[,Check2,...,CheckN] reason
+func (maps Maps) Ignore(n ast.Node, check string) bool {
+	for _, cg := range maps.Comments(n) {
+		txt := strings.TrimSpace(cg.Text())
+		if strings.HasPrefix(txt, "lint:ignore") {
+			continue
+		}
+		checks := strings.Split(txt, ",")
+		for i := range checks {
+			if check == checks[i] {
+				return true
+			}
+		}
+	}
+	return false
 }
