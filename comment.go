@@ -43,15 +43,40 @@ func (maps Maps) Annotated(n ast.Node, annotation string) bool {
 //   //lint:ignore Check1[,Check2,...,CheckN] reason
 func (maps Maps) Ignore(n ast.Node, check string) bool {
 	for _, cg := range maps.Comments(n) {
-		txt := strings.Split(cg.Text(), " ")
-		if len(txt) < 3 && txt[0] != "lint:ignore" {
+		if hasIgnoreCheck(cg.Text(), check) {
+			return true
+		}
+	}
+	return false
+}
+
+// IgnorePos checks either specified postion of AST node is ignored by the check.
+// It follows staticcheck style as the below.
+//   //lint:ignore Check1[,Check2,...,CheckN] reason
+func (maps Maps) IgnorePos(pos token.Pos, check string) bool {
+
+	for n, cg := range maps {
+		if n.Pos() != pos {
 			continue
 		}
-		checks := strings.Split(txt[1], ",")
-		for i := range checks {
-			if check == checks[i] {
-				return true
-			}
+
+		if hasIgnoreCheck(cg.Text(), check) {
+			return true
+		}
+	}
+
+	return false
+}
+
+func hasIgnoreCheck(s, check string) bool {
+	txt := strings.Split(s, " ")
+	if len(txt) < 3 && txt[0] != "lint:ignore" {
+		continue
+	}
+	checks := strings.Split(txt[1], ",")
+	for i := range checks {
+		if check == checks[i] {
+			return true
 		}
 	}
 	return false
