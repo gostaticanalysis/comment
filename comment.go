@@ -77,8 +77,9 @@ func (maps Maps) IgnorePos(pos token.Pos, check string) bool {
 func hasIgnoreCheck(s, check string) bool {
 	txt := strings.Split(s, " ")
 	if len(txt) < 3 && txt[0] != "lint:ignore" {
-		continue
+		return false
 	}
+
 	checks := strings.Split(txt[1], ",")
 	for i := range checks {
 		if check == checks[i] {
