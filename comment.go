@@ -28,6 +28,18 @@ func (maps Maps) Comments(n ast.Node) []*ast.CommentGroup {
 	return nil
 }
 
+// CommentsByPos returns correspond a CommentGroup slice to specified pos.
+func (maps Maps) CommentsByPos(pos token.Pos) []*ast.CommentGroup {
+	for i := range maps {
+		for n, cgs := range maps[i] {
+			if n.Pos() == pos {
+				return cgs
+			}
+		}
+	}
+	return nil
+}
+
 // Annotated checks either specified AST node is annotated or not.
 func (maps Maps) Annotated(n ast.Node, annotation string) bool {
 	for _, cg := range maps.Comments(n) {
@@ -54,17 +66,11 @@ func (maps Maps) Ignore(n ast.Node, check string) bool {
 // It follows staticcheck style as the below.
 //   //lint:ignore Check1[,Check2,...,CheckN] reason
 func (maps Maps) IgnorePos(pos token.Pos, check string) bool {
-
-	for n, cg := range maps {
-		if n.Pos() != pos {
-			continue
-		}
-
+	for _, cg := range maps.CommentsByPos(pos) {
 		if hasIgnoreCheck(cg.Text(), check) {
 			return true
 		}
 	}
-
 	return false
 }
 
