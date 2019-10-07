@@ -2,7 +2,7 @@
 
 [![godoc.org][godoc-badge]][godoc]
 
-`comment` provides utilities for [ast.CommentMap](https://golang.org/go/ast/#CommentMap).
+`comment` provides utilities for [ast.CommentMap](https://golang.org/pkg/go/ast/#CommentMap).
 
 <!-- links -->
 [godoc]: https://godoc.org/github.com/gostaticanalysis/comment
