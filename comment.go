@@ -74,6 +74,31 @@ func (maps Maps) IgnorePos(pos token.Pos, check string) bool {
 	return false
 }
 
+// CommentsByLine returns correspond a CommentGroup slice to specified line.
+func (maps Maps) CommentsByLine(fset *token.FileSet, line int) []*ast.CommentGroup {
+	for i := range maps {
+		for n, cgs := range maps[i] {
+			l := fset.File(n.Pos()).Line(n.Pos())
+			if l == line {
+				return cgs
+			}
+		}
+	}
+	return nil
+}
+
+// IgnoreLine checks either specified lineof AST node is ignored by the check.
+// It follows staticcheck style as the below.
+//   //lint:ignore Check1[,Check2,...,CheckN] reason
+func (maps Maps) IgnoreLine(fset *token.FileSet, line int, check string) bool {
+	for _, cg := range maps.CommentsByLine(fset, line) {
+		if hasIgnoreCheck(cg.Text(), check) {
+			return true
+		}
+	}
+	return false
+}
+
 func hasIgnoreCheck(s, check string) bool {
 	txt := strings.Split(s, " ")
 	if len(txt) < 3 && txt[0] != "lint:ignore" {
