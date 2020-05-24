@@ -92,8 +92,11 @@ func (maps Maps) CommentsByLine(fset *token.FileSet, line int) []*ast.CommentGro
 //   //lint:ignore Check1[,Check2,...,CheckN] reason
 func (maps Maps) IgnoreLine(fset *token.FileSet, line int, check string) bool {
 	for _, cg := range maps.CommentsByLine(fset, line) {
-		if hasIgnoreCheck(cg.Text(), check) {
-			return true
+		for _, c := range cg.List {
+			text := strings.TrimPrefix(strings.TrimSpace(c.Text), "//")
+			if hasIgnoreCheck(text, check) {
+				return true
+			}
 		}
 	}
 	return false
