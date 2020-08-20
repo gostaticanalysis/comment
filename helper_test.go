@@ -37,6 +37,7 @@ func maps(t *testing.T, fset *token.FileSet, path string) comment.Maps {
 	return comment.New(fset, files)
 }
 
+// pos find position of `_` in source codes as a token.Pos.
 func pos(t *testing.T, fset *token.FileSet, path string) token.Pos {
 	t.Helper()
 
