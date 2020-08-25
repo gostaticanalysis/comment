@@ -123,7 +123,7 @@ func (maps Maps) IgnoreLine(fset *token.FileSet, line int, check string) bool {
 
 func hasIgnoreCheck(s, check string) bool {
 	txt := strings.Split(s, " ")
-	if len(txt) < 3 && txt[0] != "lint:ignore" {
+	if len(txt) < 3 || txt[0] != "lint:ignore" {
 		return false
 	}
 
