@@ -16,7 +16,7 @@ func TestMaps_CommentsByPosLine(t *testing.T) {
 		want []string
 	}{
 		"single": {"testdata/Maps_CommentsByPosLine/single.go", []string{"a"}},
-		"multi": {"testdata/Maps_CommentsByPosLine/multi.go", []string{"b"}},
+		"multi":  {"testdata/Maps_CommentsByPosLine/multi.go", []string{"b"}},
 	}
 
 	for n, tt := range cases {
