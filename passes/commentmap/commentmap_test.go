@@ -4,12 +4,13 @@ import (
 	"go/ast"
 	"testing"
 
-	"github.com/gostaticanalysis/comment"
-	"github.com/gostaticanalysis/comment/passes/commentmap"
 	"golang.org/x/tools/go/analysis"
 	"golang.org/x/tools/go/analysis/analysistest"
 	"golang.org/x/tools/go/analysis/passes/inspect"
 	"golang.org/x/tools/go/ast/inspector"
+
+	"github.com/gostaticanalysis/comment"
+	"github.com/gostaticanalysis/comment/passes/commentmap"
 )
 
 func Test_Maps_Ignore(t *testing.T) {
