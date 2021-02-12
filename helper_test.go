@@ -7,8 +7,9 @@ import (
 	"go/token"
 	"testing"
 
-	"github.com/gostaticanalysis/comment"
 	"golang.org/x/tools/txtar"
+
+	"github.com/gostaticanalysis/comment"
 )
 
 func parse(t *testing.T, fset *token.FileSet, path string) []*ast.File {
