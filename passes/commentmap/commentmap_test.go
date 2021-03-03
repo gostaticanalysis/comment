@@ -34,6 +34,10 @@ func Test_Maps_Ignore(t *testing.T) {
 			path:  "notignore",
 			found: false,
 		},
+		"havecomment": {
+			path:  "havecomment",
+			found: true,
+		},
 	}
 	for name, tt := range tests {
 		name := name
