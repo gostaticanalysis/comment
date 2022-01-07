@@ -66,3 +66,31 @@ func TestMaps_IgnoreLine(t *testing.T) {
 		})
 	}
 }
+
+func TestMaps_IgnorePosLine(t *testing.T) {
+	t.Parallel()
+
+	cases := map[string]struct {
+		path  string
+		check string
+		want  bool
+	}{
+		"single": {"testdata/Maps_IgnorePosLine/single.go", "test-check", true},
+		"multi":  {"testdata/Maps_IgnorePosLine/multi.go", "test-check", true},
+	}
+
+	for n, tt := range cases {
+		tt := tt
+		t.Run(n, func(t *testing.T) {
+			t.Parallel()
+			fset := token.NewFileSet()
+			ms := maps(t, fset, tt.path)
+			p := pos(t, fset, tt.path)
+
+			got := ms.IgnorePosLine(fset, p, tt.check)
+			if tt.want != got {
+				t.Errorf("want %v, got %v", tt.want, got)
+			}
+		})
+	}
+}
