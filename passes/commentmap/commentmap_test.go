@@ -54,8 +54,8 @@ func Test_Maps_Ignore(t *testing.T) {
 				Run: func(pass *analysis.Pass) (interface{}, error) {
 					var found bool
 
-					ins := pass.ResultOf[inspect.Analyzer].(*inspector.Inspector)
-					cmaps := pass.ResultOf[commentmap.Analyzer].(comment.Maps)
+					ins, _ := pass.ResultOf[inspect.Analyzer].(*inspector.Inspector)
+					cmaps, _ := pass.ResultOf[commentmap.Analyzer].(comment.Maps)
 					ins.Preorder(nil, func(n ast.Node) {
 						if cmaps.Ignore(n, "check") {
 							found = true
